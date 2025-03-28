@@ -1,0 +1,19 @@
+{
+  "name": "dsa-coursework-l3-spring-2025",
+  "version": "1.0.0",
+  "description": "Welcome to Pursuit L3 V3 Spring 2025 Techncial Interview Training! This repository contains all the materials you'll need throughout the program, including practice exercises, challenges, and tests to verify your solutions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "Paul Gasbarra, et al.",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
