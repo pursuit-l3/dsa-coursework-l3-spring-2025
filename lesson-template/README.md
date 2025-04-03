@@ -8,9 +8,9 @@
 
 ## Technical Training (90 minutes)
 
-### LeetCode Problem (45 minutes)
+### Data Structures In Python (45 minutes)
 
-### React/Class Implementation (35 minutes)
+### Exercises (45 minutes)
 
 ## Wrap-up (10 minutes)
 

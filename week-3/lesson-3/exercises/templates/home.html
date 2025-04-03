@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask App - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Flask App</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('user_list') }}">Users</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h2>{{ title }}</h2>
+            <p>{{ message }}</p>
+        </section>
+        
+        <section class="features">
+            <h2>Features</h2>
+            <div class="feature-grid">
+                <div class="feature">
+                    <h3>User Management</h3>
+                    <p>View and manage users in the system.</p>
+                </div>
+                <div class="feature">
+                    <h3>Contact Form</h3>
+                    <p>Get in touch with us using our contact form.</p>
+                </div>
+                <div class="feature">
+                    <h3>About Page</h3>
+                    <p>Learn more about this application.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 My Flask App. All rights reserved.</p>
+    </footer>
+</body>
+</html> 

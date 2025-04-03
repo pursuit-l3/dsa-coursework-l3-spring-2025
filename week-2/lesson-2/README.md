@@ -1,4 +1,4 @@
-# Week 2, Lesson 2: React Props and Stack Implementation
+# Week 2, Lesson 2: Python Modules and Packages
 
 ## Warm-up (30 minutes)
 
@@ -6,212 +6,216 @@
 
 - Brain Teaser (15 min): Probability problem
 
-  You have three coins in a bag: a fair coin with heads and tails, a two-headed coin, and a two-tailed coin. You randomly select a coin from the bag and flip it. If the result is heads, what is the probability that you selected the two-headed coin?
+  Three people check their hats at a restaurant. The attendant mixes up the hats and returns them randomly. What is the probability that none of the three people get their own hat back?
 
 ### SQL Exercise (15 minutes)
 
-- SQL Exercise (15 min): [SQLBolt Lesson 5 - Review Simple SELECT Queries](https://sqlbolt.com/lesson/select_queries_review)
+- SQL Exercise (15 min): [SQLBolt Lesson 5 - SQL Review: Simple SELECT Queries](https://sqlbolt.com/lesson/select_queries_review)
 
 ## Technical Training (90 minutes)
 
 ### LeetCode Problem (45 minutes)
 
-- LeetCode Problem (45 min): [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
+- LeetCode Problem (45 min): [Group Anagrams](https://leetcode.com/problems/group-anagrams/)
 
-### React Basics (35 minutes)
+# Break (10 minutes)
 
-#### Understanding Props (10 minutes)
+# Python Modules and Packages (35 minutes)
 
-Props (short for "properties") are React's way of passing data from parent to child components. They are read-only and help make your components reusable.
+## Introduction to Modules and Packages
 
-**Basic Props Usage:**
+In Python, modules and packages are essential for organizing and reusing code:
 
-```jsx
-// Parent component
-function App() {
-  return <Greeting name="John" age={25} />;
-}
+- **Module**: A Python file containing code (functions, classes, variables)
+- **Package**: A directory containing multiple modules and a special `__init__.py` file
 
-// Child component
-function Greeting(props) {
-  return (
-    <div>
-      <h1>Hello, {props.name}!</h1>
-      <p>You are {props.age} years old.</p>
-    </div>
-  );
-}
+## Creating and Using Modules
+
+```python
+# math_operations.py
+def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
+
+def multiply(a, b):
+    return a * b
+
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a / b
+
+PI = 3.14159
 ```
 
-**Props Destructuring:**
+```python
+# Using the module
+import math_operations
 
-```jsx
-function Greeting({ name, age }) {
-  return (
-    <div>
-      <h1>Hello, {name}!</h1>
-      <p>You are {age} years old.</p>
-    </div>
-  );
-}
+result = math_operations.add(5, 3)
+print(result)  # 8
+
+# Import specific functions
+from math_operations import multiply, PI
+
+product = multiply(4, 7)
+print(product)  # 28
+print(PI)  # 3.14159
+
+# Import with alias
+import math_operations as math_ops
+
+result = math_ops.subtract(10, 4)
+print(result)  # 6
 ```
 
-**Default Props:**
+## Creating Packages
 
-```jsx
-function Greeting({ name = "Guest", age = 0 }) {
-  return (
-    <div>
-      <h1>Hello, {name}!</h1>
-      <p>You are {age} years old.</p>
-    </div>
-  );
-}
+A package is a directory with an `__init__.py` file and one or more module files:
 
-// Alternative way
-Greeting.defaultProps = {
-  name: "Guest",
-  age: 0,
-};
+```
+my_package/
+    __init__.py
+    module1.py
+    module2.py
+    subpackage/
+        __init__.py
+        module3.py
 ```
 
-#### Component Composition (15 minutes)
+The `__init__.py` file can be empty or can contain initialization code:
 
-Component composition is a powerful pattern in React that allows you to build complex UIs by combining simpler components.
+```python
+# my_package/__init__.py
+print("Initializing my_package")
 
-**Basic Composition:**
-
-```jsx
-function App() {
-  return (
-    <div>
-      <Header />
-      <MainContent />
-      <Footer />
-    </div>
-  );
-}
-
-function Header() {
-  return <header>This is the header</header>;
-}
-
-function MainContent() {
-  return <main>This is the main content</main>;
-}
-
-function Footer() {
-  return <footer>This is the footer</footer>;
-}
+# Import commonly used functions to make them available directly from the package
+from .module1 import function1, function2
+from .module2 import Class1
 ```
 
-**Composition with Children Props:**
+## Importing from Packages
 
-```jsx
-function Card({ title, children }) {
-  return (
-    <div className="card">
-      <div className="card-header">{title}</div>
-      <div className="card-body">{children}</div>
-    </div>
-  );
-}
+```python
+# Import the package
+import my_package
 
-function App() {
-  return (
-    <Card title="Welcome">
-      <p>This is some content inside the card.</p>
-      <button>Click me</button>
-    </Card>
-  );
-}
+# Import a specific module from the package
+from my_package import module1
+
+# Import a specific function from a module in the package
+from my_package.module1 import function1
+
+# Import from a subpackage
+from my_package.subpackage import module3
 ```
 
-**Specialized Components:**
+## Standard Library Modules
 
-```jsx
-function Dialog({ title, message, children }) {
-  return (
-    <div className="dialog">
-      <h2>{title}</h2>
-      <p>{message}</p>
-      <div>{children}</div>
-    </div>
-  );
-}
+Python comes with a rich standard library:
 
-function WelcomeDialog() {
-  return (
-    <Dialog title="Welcome" message="Thank you for visiting our website!">
-      <button>Get Started</button>
-    </Dialog>
-  );
-}
+```python
+# Working with file paths
+import os.path
+
+file_exists = os.path.exists("data.txt")
+file_size = os.path.getsize("data.txt")
+base_name = os.path.basename("/path/to/file.txt")  # "file.txt"
+
+# Working with dates and times
+import datetime
+
+now = datetime.datetime.now()
+today = datetime.date.today()
+one_week = datetime.timedelta(days=7)
+next_week = today + one_week
+
+# Random numbers
+import random
+
+random_number = random.randint(1, 100)
+random_choice = random.choice(["apple", "banana", "cherry"])
+random.shuffle(my_list)  # Shuffle in place
+
+# JSON handling
+import json
+
+data = {"name": "John", "age": 30}
+json_string = json.dumps(data)
+parsed_data = json.loads(json_string)
 ```
 
-#### Props vs. State (10 minutes)
+## Virtual Environments and Package Management
 
-Understanding the difference between props and state is crucial in React:
+### Creating a Virtual Environment
 
-**Props:**
+```bash
+# Create a virtual environment
+python -m venv myenv
 
-- Passed from parent to child components
-- Read-only (immutable)
-- Changes to props come from the parent component
-- Used for component configuration
+# Activate the virtual environment
+# On Windows:
+myenv\Scripts\activate
+# On macOS/Linux:
+source myenv/bin/activate
 
-**State:**
+# Deactivate when done
+deactivate
+```
 
-- Managed within the component
-- Mutable (can be changed)
-- Changes to state trigger re-renders
-- Used for component's internal data
+### Managing Packages with pip
 
-**When to Use Props vs. State:**
+```bash
+# Install a package
+pip install requests
 
-- Use props to pass data and event handlers down to child components
-- Use state to track information that the component itself needs to render properly
+# Install a specific version
+pip install requests==2.25.1
 
-**Prop Drilling and Solutions:**
-Prop drilling occurs when props need to be passed through multiple levels of components.
+# Install from requirements file
+pip install -r requirements.txt
 
-Solutions:
+# List installed packages
+pip list
 
-- Component composition
-- Context API
-- State management libraries (Redux, Zustand, etc.)
+# Generate requirements file
+pip freeze > requirements.txt
+```
+
+## Exercises
+
+For this lesson, we have exercises to practice working with modules and packages:
+
+1. `calculator_module.py`: Create a calculator module with various functions
+2. `geometry_package/`: Create a package for geometric calculations
+
+### Running the Exercises
+
+1. Navigate to the exercises directory:
+
+   ```bash
+   cd week-2/lesson-2/exercises
+   ```
+
+2. Complete the module and package files by replacing the `pass` statements with your code.
+
+3. Run the test script:
+   ```bash
+   python test_calculator.py
+   python test_geometry.py
+   ```
 
 ## Wrap-up (10 minutes)
 
-### Component Reusability Strategies
-
-1. **Design with Props in Mind**
-
-   - Make components configurable through props
-   - Avoid hardcoding values that could change
-
-2. **Use Composition Patterns**
-
-   - Leverage children props for flexible layouts
-   - Create higher-order components for shared functionality
-
-3. **Extract Reusable Logic**
-
-   - Create custom hooks for reusable logic
-   - Separate business logic from presentation
-
-4. **Consistent Prop Naming**
-
-   - Use clear, consistent naming conventions
-   - Document props with PropTypes or TypeScript
-
-5. **Component Libraries**
-   - Consider organizing reusable components into a library
-   - Use Storybook for component documentation and testing
+- Wrap-up (10 min): Best practices for organizing code with modules and packages
+- Discuss when to create modules vs. packages
+- Review solutions to the exercises
 
 ## Additional Resources
 
-- [React Props Documentation](https://reactjs.org/docs/components-and-props.html)
-- [Composition vs Inheritance](https://reactjs.org/docs/composition-vs-inheritance.html)
-- [PropTypes Documentation](https://reactjs.org/docs/typechecking-with-proptypes.html)
-- [React Patterns](https://reactpatterns.com/)
+- [Python Documentation - Modules](https://docs.python.org/3/tutorial/modules.html)
+- [Python Documentation - The import system](https://docs.python.org/3/reference/import.html)
+- [Real Python - Python Modules and Packages](https://realpython.com/python-modules-packages/)
+- [Python Package Index (PyPI)](https://pypi.org/)

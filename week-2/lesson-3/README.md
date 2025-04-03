@@ -1,19 +1,12 @@
-# Week 2, Lesson 3: React State Management
+# Week 2, Lesson 3: Python Testing and Debugging
 
 ## Warm-up (30 minutes)
 
 ### Brain Teaser (15 minutes)
 
-- Brain Teaser (15 min): Cryptarithmetic puzzle
+- Brain Teaser (15 min): Logic puzzle
 
-  Solve this cryptarithmetic puzzle where each letter represents a unique digit:
-
-  ```
-  SEND
-  +MORE
-  -----
-  MONEY
-  ```
+  A farmer needs to cross a river with a fox, a chicken, and a sack of grain. The boat is only large enough for the farmer and one item. If left alone, the fox will eat the chicken, and the chicken will eat the grain. How can the farmer get everything across safely?
 
 ### SQL Exercise (15 minutes)
 
@@ -23,241 +16,183 @@
 
 ### LeetCode Problem (45 minutes)
 
-- LeetCode Problem (45 min): [Implement Queue using Stacks](https://leetcode.com/problems/implement-queue-using-stacks/)
+- LeetCode Problem (45 min): [First Unique Character in a String](https://leetcode.com/problems/first-unique-character-in-a-string/)
 
-### React State (35 minutes)
+# Break (10 minutes)
 
-#### Introduction to State in React (5 minutes)
+# Python Testing and Debugging (35 minutes)
 
-State is a built-in feature in React that allows components to create and manage their own data. Unlike props (which are passed from parent to child), state is internal to a component.
+## Introduction to Testing
 
-**Key Characteristics of State:**
+Testing is a critical part of software development that helps ensure your code works as expected and continues to work as you make changes.
 
-- State is mutable (can be updated)
-- Changes to state trigger re-renders
-- State updates may be asynchronous
-- State should be treated as immutable when updating it
+### Types of Tests
 
-#### The useState Hook (10 minutes)
+- **Unit Tests**: Test individual components in isolation
+- **Integration Tests**: Test how components work together
+- **Functional Tests**: Test complete functionality from a user's perspective
+- **Regression Tests**: Ensure that new changes don't break existing functionality
 
-The `useState` hook is the primary way to add state to functional components in React.
+## Unit Testing with unittest
 
-**Basic Usage:**
+Python's built-in `unittest` framework provides tools for creating and running tests:
 
-```jsx
-import React, { useState } from "react";
+```python
+import unittest
 
-function Counter() {
-  // Declare a state variable 'count' with initial value 0
-  const [count, setCount] = useState(0);
+def add(a, b):
+    return a + b
 
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>Click me</button>
-    </div>
-  );
-}
+class TestAddFunction(unittest.TestCase):
+    def test_add_positive_numbers(self):
+        self.assertEqual(add(2, 3), 5)
+
+    def test_add_negative_numbers(self):
+        self.assertEqual(add(-1, -1), -2)
+
+    def test_add_mixed_numbers(self):
+        self.assertEqual(add(-1, 1), 0)
+
+if __name__ == '__main__':
+    unittest.main()
 ```
 
-**Multiple State Variables:**
+### Test Fixtures
 
-```jsx
-function UserForm() {
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(0);
-  const [email, setEmail] = useState("");
+```python
+import unittest
+import os
 
-  return (
-    <form>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Name"
-      />
-      <input
-        type="number"
-        value={age}
-        onChange={(e) => setAge(Number(e.target.value))}
-        placeholder="Age"
-      />
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-    </form>
-  );
-}
+class TestFileOperations(unittest.TestCase):
+    def setUp(self):
+        # This runs before each test
+        self.test_file = 'test_data.txt'
+        with open(self.test_file, 'w') as f:
+            f.write('Test data')
+
+    def tearDown(self):
+        # This runs after each test
+        if os.path.exists(self.test_file):
+            os.remove(self.test_file)
+
+    def test_file_exists(self):
+        self.assertTrue(os.path.exists(self.test_file))
+
+    def test_file_content(self):
+        with open(self.test_file, 'r') as f:
+            content = f.read()
+        self.assertEqual(content, 'Test data')
 ```
 
-**Using Objects with useState:**
+### Test Assertions
 
-```jsx
-function UserForm() {
-  const [user, setUser] = useState({
-    name: "",
-    age: 0,
-    email: "",
-  });
+The `unittest` module provides various assertion methods:
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({
-      ...user, // Important: spread the existing state
-      [name]: value, // Update only the changed field
-    });
-  };
+- `assertEqual(a, b)`: a == b
+- `assertNotEqual(a, b)`: a != b
+- `assertTrue(x)`: bool(x) is True
+- `assertFalse(x)`: bool(x) is False
+- `assertIs(a, b)`: a is b
+- `assertIsNot(a, b)`: a is not b
+- `assertIsNone(x)`: x is None
+- `assertIsNotNone(x)`: x is not None
+- `assertIn(a, b)`: a in b
+- `assertNotIn(a, b)`: a not in b
+- `assertRaises(exc, func, *args, **kwargs)`: func(\*args, \*\*kwargs) raises exc
 
-  return (
-    <form>
-      <input
-        type="text"
-        name="name"
-        value={user.name}
-        onChange={handleChange}
-        placeholder="Name"
-      />
-      <input
-        type="number"
-        name="age"
-        value={user.age}
-        onChange={handleChange}
-        placeholder="Age"
-      />
-      <input
-        type="email"
-        name="email"
-        value={user.email}
-        onChange={handleChange}
-        placeholder="Email"
-      />
-    </form>
-  );
-}
+## Debugging Techniques
+
+### Using print() Statements
+
+The simplest debugging technique is to add print statements to your code:
+
+```python
+def complex_function(x, y):
+    print(f"Inputs: x={x}, y={y}")
+    result = x * 2
+    print(f"After first operation: {result}")
+    result += y
+    print(f"Final result: {result}")
+    return result
 ```
 
-#### State Updates and Rendering (10 minutes)
+### Using the Python Debugger (pdb)
 
-**State Updates are Asynchronous:**
+Python's built-in debugger allows you to step through code execution:
 
-```jsx
-function Counter() {
-  const [count, setCount] = useState(0);
+```python
+import pdb
 
-  // This may not work as expected
-  const incrementTwice = () => {
-    setCount(count + 1); // Uses current state value
-    setCount(count + 1); // Also uses the same current state value
-  };
+def buggy_function():
+    x = 5
+    y = 0
+    pdb.set_trace()  # Execution stops here and enters debugger
+    z = x / y  # This will cause a ZeroDivisionError
+    return z
 
-  // This works correctly
-  const incrementTwiceCorrectly = () => {
-    setCount((prevCount) => prevCount + 1); // Uses previous state
-    setCount((prevCount) => prevCount + 1); // Uses updated previous state
-  };
-
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={incrementTwice}>Increment Twice (Wrong)</button>
-      <button onClick={incrementTwiceCorrectly}>
-        Increment Twice (Correct)
-      </button>
-    </div>
-  );
-}
+buggy_function()
 ```
 
-**State and Re-rendering:**
+Common pdb commands:
 
-- React components re-render when their state or props change
-- Only the component and its children re-render, not the entire application
-- React uses a virtual DOM to optimize actual DOM updates
+- `n` (next): Execute the current line and move to the next one
+- `s` (step): Step into a function call
+- `c` (continue): Continue execution until the next breakpoint
+- `p expression` (print): Print the value of an expression
+- `q` (quit): Quit the debugger
 
-#### Lifting State Up (10 minutes)
+### Using try-except Blocks
 
-When multiple components need to share state, you can "lift the state up" to their closest common ancestor.
-
-```jsx
-function ParentComponent() {
-  const [count, setCount] = useState(0);
-
-  const increment = () => {
-    setCount(count + 1);
-  };
-
-  return (
-    <div>
-      <h1>Count: {count}</h1>
-      <ChildA count={count} />
-      <ChildB onIncrement={increment} />
-    </div>
-  );
-}
-
-function ChildA({ count }) {
-  return <p>The current count is: {count}</p>;
-}
-
-function ChildB({ onIncrement }) {
-  return <button onClick={onIncrement}>Increment</button>;
-}
+```python
+def safe_division(a, b):
+    try:
+        result = a / b
+    except ZeroDivisionError:
+        print("Error: Division by zero")
+        result = None
+    except TypeError:
+        print("Error: Invalid types for division")
+        result = None
+    else:
+        print("Division successful")
+    finally:
+        print("Division operation completed")
+    return result
 ```
 
-**Benefits of Lifting State Up:**
+## Exercises
 
-- Single source of truth for shared data
-- Easier to debug and maintain
-- Avoids prop drilling for deeply nested components (to some extent)
+For this lesson, we have exercises to practice testing and debugging in Python:
+
+1. `buggy_functions.py`: Debug and fix functions with various issues
+2. `test_string_utils.py`: Write tests for a string utility module
+
+### Running the Exercises
+
+1. Navigate to the exercises directory:
+
+   ```bash
+   cd week-2/lesson-3/exercises
+   ```
+
+2. Debug and fix the functions in `buggy_functions.py`.
+
+3. Complete the test cases in `test_string_utils.py`.
+
+4. Run the tests:
+   ```bash
+   python -m unittest test_string_utils.py
+   ```
 
 ## Wrap-up (10 minutes)
 
-### State Update Best Practices
-
-1. **Treat State as Immutable**
-
-   - Always create new objects/arrays when updating state
-   - Use spread operators or methods like `map`, `filter`, and `reduce`
-   - Never directly modify state objects
-
-2. **Use Functional Updates for Derived State**
-
-   ```jsx
-   // Instead of this:
-   setCount(count + 1);
-
-   // Do this:
-   setCount((prevCount) => prevCount + 1);
-   ```
-
-3. **Keep State Minimal and Flat**
-
-   - Don't store derived data that can be calculated from props or other state
-   - Avoid deeply nested state objects
-   - Consider normalizing complex state structures
-
-4. **Separate Related State Logic**
-
-   - Use multiple `useState` calls for unrelated state
-   - Consider using `useReducer` for complex state logic
-   - Create custom hooks to encapsulate related state logic
-
-5. **State Initialization Patterns**
-   - Use lazy initialization for expensive computations
-   ```jsx
-   // Lazy initialization
-   const [state, setState] = useState(() => {
-     // This function runs only on initial render
-     return computeExpensiveInitialState();
-   });
-   ```
+- Wrap-up (10 min): Best practices for testing and debugging
+- Discuss test-driven development (TDD)
+- Review solutions to the exercises
 
 ## Additional Resources
 
-- [React State and Lifecycle Documentation](https://reactjs.org/docs/state-and-lifecycle.html)
-- [Hooks API Reference](https://reactjs.org/docs/hooks-reference.html)
-- [Thinking in React](https://reactjs.org/docs/thinking-in-react.html)
-- [A Complete Guide to useEffect](https://overreacted.io/a-complete-guide-to-useeffect/)
+- [Python Documentation - unittest](https://docs.python.org/3/library/unittest.html)
+- [Python Documentation - pdb](https://docs.python.org/3/library/pdb.html)
+- [Real Python - Getting Started With Testing in Python](https://realpython.com/python-testing/)
+- [Python Testing with pytest](https://realpython.com/pytest-python-testing/)

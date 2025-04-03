@@ -1,10 +1,10 @@
-# Lesson 2: Array Methods and String Manipulation
+# Lesson 2: Python Collections and List Comprehensions
 
 ## Warm-up (30 minutes)
 
 ### Brain Teaser (15 minutes)
 
-I left my campsite and hiked south for 3 miles. Then, I turned east and hiked for 3 miles. I then turned north and hiked for 3 miles, at which time I came upon a bear inside my tent eating my food! What color was the bear?
+- Brain Teaser (15 min): Binary number pattern recognition
 
 ### SQL Exercise (15 minutes)
 
@@ -14,267 +14,292 @@ I left my campsite and hiked south for 3 miles. Then, I turned east and hiked fo
 
 ### LeetCode Problem (45 minutes)
 
-- LeetCode Problem (45 min): [Design HashMap](https://leetcode.com/problems/design-hashmap/description/)
+- LeetCode Problem (45 min): [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/)
 
-### JavaScript Fundamentals (35 minutes)
+#### Approach to the problem:
 
-- JavaScript Fundamentals (35 min): ## Arrow Functions (10 minutes)
+1. **Understand the problem**:
 
-### Traditional Functions vs. Arrow Functions
+   - We need to determine if a string is a palindrome
+   - A palindrome reads the same forward and backward
+   - Consider only alphanumeric characters and ignore case
 
-Traditional function declarations can be verbose:
+2. **Discuss possible approaches**:
 
-```javascript
-// Traditional function expression
-const add = function (a, b) {
-  return a + b;
-};
+   - Two-pointer technique (start from both ends and move inward)
+   - Clean the string first, then compare with its reverse
+   - Handle edge cases like empty strings or strings with only non-alphanumeric characters
 
-// Traditional method in an object
-const calculator = {
-  value: 0,
-  add: function (a, b) {
-    return a + b;
-  },
-};
+3. **Implement the solution in Python**:
 
-calculator.add(5, 10); // 15
+   ```python
+   def is_palindrome(s: str) -> bool:
+       # Convert to lowercase and remove non-alphanumeric characters
+       s = ''.join(char.lower() for char in s if char.isalnum())
+
+       # Empty string is considered a palindrome
+       if not s:
+           return True
+
+       # Check if the string equals its reverse
+       return s == s[::-1]
+
+       # Alternative: Two-pointer approach
+       """
+       left, right = 0, len(s) - 1
+
+       while left < right:
+           if s[left] != s[right]:
+               return False
+           left += 1
+           right -= 1
+
+       return True
+       """
+   ```
+
+4. **Analyze time and space complexity**:
+   - Time Complexity: O(n) where n is the length of the string
+   - Space Complexity: O(n) for the cleaned string
+
+# Break (10 minutes)
+
+# Python Collections and List Comprehensions (35 minutes)
+
+## Python Collections Overview
+
+Python provides several built-in collection types that are powerful and flexible:
+
+### 1. Lists
+
+Lists are ordered, mutable collections that can contain elements of different types.
+
+```python
+# Creating lists
+fruits = ["apple", "banana", "cherry"]
+numbers = [1, 2, 3, 4, 5]
+mixed = [1, "hello", True, 3.14]
+
+# Accessing elements (indexing starts at 0)
+first_fruit = fruits[0]  # "apple"
+last_number = numbers[-1]  # 5
+
+# Slicing
+first_two_fruits = fruits[0:2]  # ["apple", "banana"]
+first_three_numbers = numbers[:3]  # [1, 2, 3]
+last_two_numbers = numbers[-2:]  # [4, 5]
+
+# Modifying lists
+fruits.append("orange")  # Add to the end
+fruits.insert(1, "blueberry")  # Insert at index 1
+fruits.remove("banana")  # Remove by value
+popped_fruit = fruits.pop()  # Remove and return the last item
+fruits[0] = "avocado"  # Replace an item
+
+# List operations
+combined = fruits + numbers  # Concatenation
+repeated = fruits * 2  # Repetition
+length = len(fruits)  # Length of the list
 ```
 
-Arrow functions provide a more concise syntax:
+### 2. Dictionaries
 
-```javascript
-// Basic arrow function
-const add = (a, b) => {
-  return a + b;
-};
+Dictionaries are collections of key-value pairs, similar to maps or associative arrays in other languages.
 
-// Even more concise with implicit return
-const add = (a, b) => a + b;
-
-// Single parameter (parentheses optional)
-const square = (x) => x * x;
-
-// No parameters require empty parentheses
-const getRandomNumber = () => Math.random();
-```
-
-### Lexical `this`
-
-One of the most powerful features of arrow functions is how they handle the `this` keyword:
-
-```javascript
-// Traditional function - 'this' problem
-function Counter() {
-  this.count = 0;
-
-  setInterval(function () {
-    // 'this' here refers to the global object, not Counter
-    this.count++;
-    console.log(this.count); // NaN
-  }, 1000);
+```python
+# Creating dictionaries
+person = {
+    "name": "John",
+    "age": 30,
+    "city": "New York"
 }
 
-// Traditional workaround
-function Counter() {
-  this.count = 0;
-  const self = this;
+# Accessing values
+name = person["name"]  # "John"
+age = person.get("age")  # 30
+# Using get with a default value
+country = person.get("country", "Unknown")  # "Unknown"
 
-  setInterval(function () {
-    self.count++;
-    console.log(self.count); // Works as expected
-  }, 1000);
-}
+# Modifying dictionaries
+person["email"] = "john@example.com"  # Add a new key-value pair
+person["age"] = 31  # Update a value
+del person["city"]  # Remove a key-value pair
+email = person.pop("email")  # Remove and return a value
 
-// Arrow function solution
-function Counter() {
-  this.count = 0;
-
-  setInterval(() => {
-    // 'this' is lexically bound to Counter
-    this.count++;
-    console.log(this.count); // Works as expected
-  }, 1000);
-}
+# Dictionary methods
+keys = person.keys()  # Get all keys
+values = person.values()  # Get all values
+items = person.items()  # Get all key-value pairs as tuples
 ```
 
-### When Not to Use Arrow Functions
+### 3. Sets
 
-Arrow functions are not always the best choice:
+Sets are unordered collections of unique elements.
 
-```javascript
-// Object methods (where 'this' should refer to the object)
-const person = {
-  name: "Alice",
-  // Bad practice with arrow function
-  greet: () => {
-    console.log(`Hello, my name is ${this.name}`); // 'this' is not bound to person
-  },
-  // Good practice with method syntax
-  greet() {
-    console.log(`Hello, my name is ${this.name}`); // Works correctly
-  },
-};
+```python
+# Creating sets
+fruits_set = {"apple", "banana", "cherry"}
+numbers_set = {1, 2, 3, 4, 5}
 
-// Constructor functions
-// Arrow functions cannot be used as constructors
-// const Person = (name) => { this.name = name; };  // Doesn't work
-// const alice = new Person("Alice");  // TypeError
+# Adding and removing elements
+fruits_set.add("orange")
+fruits_set.remove("banana")  # Raises an error if not found
+fruits_set.discard("kiwi")  # No error if not found
 
-// Event handlers that need to use 'this' to refer to the DOM element
-button.addEventListener("click", function () {
-  this.classList.toggle("active"); // 'this' refers to the button
-});
+# Set operations
+set_a = {1, 2, 3, 4}
+set_b = {3, 4, 5, 6}
+
+union = set_a | set_b  # {1, 2, 3, 4, 5, 6}
+intersection = set_a & set_b  # {3, 4}
+difference = set_a - set_b  # {1, 2}
+symmetric_difference = set_a ^ set_b  # {1, 2, 5, 6}
 ```
 
-## Template Literals (5 minutes)
+### 4. Tuples
+
+Tuples are ordered, immutable collections.
+
+```python
+# Creating tuples
+coordinates = (10, 20)
+rgb = (255, 0, 0)
+
+# Accessing elements
+x = coordinates[0]  # 10
+red = rgb[0]  # 255
+
+# Tuple operations
+combined = coordinates + rgb  # (10, 20, 255, 0, 0)
+repeated = coordinates * 2  # (10, 20, 10, 20)
+```
+
+## List Comprehensions
+
+List comprehensions provide a concise way to create lists based on existing lists.
 
 ### Basic Syntax
 
-Template literals provide an improved way to work with strings:
-
-```javascript
-// Traditional string concatenation
-const name = "Alice";
-const greeting = "Hello, " + name + "!";
-
-// Template literal
-const betterGreeting = `Hello, ${name}!`;
-
-// Multi-line strings
-// Traditional (cumbersome)
-const oldMultiline =
-  "This is line 1.\n" + "This is line 2.\n" + "This is line 3.";
-
-// With template literals
-const multiline = `This is line 1.
-This is line 2.
-This is line 3.`;
+```python
+[expression for item in iterable if condition]
 ```
 
-### Expression Interpolation
+### Examples
 
-Template literals can include any JavaScript expression:
+```python
+# Basic list comprehension
+numbers = [1, 2, 3, 4, 5]
+squares = [x**2 for x in numbers]  # [1, 4, 9, 16, 25]
 
-```javascript
-const a = 5;
-const b = 10;
-console.log(`Sum: ${a + b}, Product: ${a * b}`);
+# With a condition
+even_squares = [x**2 for x in numbers if x % 2 == 0]  # [4, 16]
 
-const person = { name: "Bob", age: 25 };
-console.log(`${person.name} is ${person.age} years old.`);
+# With a more complex expression
+formatted = [f"Number {x}" for x in numbers]  # ["Number 1", "Number 2", ...]
 
-// Can include function calls
-const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
-console.log(`${capitalize("hello")} world!`);
-
-// Can include conditional expressions
-const status = 18;
-console.log(`Status: ${status >= 18 ? "Adult" : "Minor"}`);
+# Nested list comprehension
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+flattened = [x for row in matrix for x in row]  # [1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```
 
-### Tagged Templates
+### Dictionary Comprehensions
 
-Template literals can be processed by a tag function:
+Similar to list comprehensions, but for creating dictionaries.
 
-```javascript
-function highlight(strings, ...values) {
-  return strings.reduce((result, string, i) => {
-    return (
-      result +
-      string +
-      (values[i] ? `<span class="highlight">${values[i]}</span>` : "")
-    );
-  }, "");
-}
+```python
+# Basic dictionary comprehension
+numbers = [1, 2, 3, 4, 5]
+squares_dict = {x: x**2 for x in numbers}  # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
 
-const name = "Alice";
-const age = 28;
-const highlighted = highlight`${name} is ${age} years old.`;
-// Result: "<span class="highlight">Alice</span> is <span class="highlight">28</span> years old."
+# With a condition
+even_squares_dict = {x: x**2 for x in numbers if x % 2 == 0}  # {2: 4, 4: 16}
 ```
 
-## Practical Examples (5 minutes)
+### Set Comprehensions
 
-Let's see how these features work together in practical scenarios:
+Creating sets using comprehensions.
 
-```javascript
-// Data processing example
-const users = [
-  { id: 1, name: "Alice", age: 28 },
-  { id: 2, name: "Bob", age: 35 },
-  { id: 3, name: "Charlie", age: 22 },
-];
-
-// ES5 way
-var adultNamesES5 = users
-  .filter(function (user) {
-    return user.age >= 18;
-  })
-  .map(function (user) {
-    return user.name;
-  });
-
-// ES6+ way
-const adultNames = users
-  .filter((user) => user.age >= 18)
-  .map((user) => user.name);
-
-console.log(`Adult users: ${adultNames.join(", ")}`);
-
-// DOM manipulation example
-const todoItems = [
-  { id: 1, text: "Learn JavaScript", completed: true },
-  { id: 2, text: "Build a project", completed: false },
-];
-
-const renderTodoList = () => {
-  const todoList = document.getElementById("todo-list");
-
-  todoList.innerHTML = todoItems
-    .map(
-      (item) => `
-      <li class="${item.completed ? "completed" : ""}">
-        <input 
-          type="checkbox" 
-          ${item.completed ? "checked" : ""}
-          data-id="${item.id}"
-        />
-        ${item.text}
-      </li>
-    `
-    )
-    .join("");
-};
+```python
+# Basic set comprehension
+numbers = [1, 2, 2, 3, 4, 4, 5]
+unique_squares = {x**2 for x in numbers}  # {1, 4, 9, 16, 25}
 ```
 
-## Conclusion and Best Practices (5 minutes)
+## Exercises
 
-To summarize what we've learned:
+For this lesson, we have two sets of exercises to practice working with Python collections and list comprehensions:
 
-1. **Arrow functions**:
+### Exercise 1: List Operations
 
-   - Use for short callbacks and when you need lexical `this`
-   - Avoid for object methods, constructors, and event handlers that need dynamic `this`
+In this exercise, you'll implement basic list operations using traditional Python methods.
 
-2. **Template literals**:
-   - Use for string interpolation and multi-line strings
-   - Consider tagged templates for advanced string processing
+File: `list_operations.py`
 
-These ES6+ features have greatly improved JavaScript development, making code more concise, readable, and less prone to common errors. As you practice using these features, you'll develop an intuition for when each one is most appropriate.
+Functions to implement:
 
-In our next session, we'll explore more advanced ES6+ features like destructuring, spread/rest operators, and modules.
+- `filter_even_numbers(numbers)`: Filter a list to include only even numbers
+- `double_values(numbers)`: Create a new list with each value doubled
+- `find_max_value(numbers)`: Find the maximum value in a list
+- `count_occurrences(items)`: Count the occurrences of each item in a list
 
-For practice:
+### Exercise 2: List Comprehensions
 
-1. Refactor a traditional JavaScript function to use arrow functions
-2. Convert string concatenation to template literals
-3. Replace `var` declarations with appropriate `let` or `const`
+In this exercise, you'll implement the same operations using list comprehensions for more concise code.
 
-Any questions before we move on?
+File: `list_comprehensions.py`
+
+Functions to implement:
+
+- `squares_of_evens(numbers)`: Create a list of squares of even numbers
+- `filter_strings_by_length(strings, min_length)`: Filter strings by minimum length
+- `extract_first_char(strings)`: Extract the first character of each string
+- `create_word_lengths_dict(words)`: Create a dictionary mapping words to their lengths
+
+### Running the Exercises and Tests
+
+1. Navigate to the exercises directory:
+
+   ```bash
+   cd week-1/lesson-2/exercises
+   ```
+
+2. Complete the functions in each file by replacing the `pass` statements with your code.
+
+3. Run the exercises to see if your implementations work:
+
+   ```bash
+   python list_operations.py
+   python list_comprehensions.py
+   ```
+
+4. Run the tests to verify your implementations:
+
+   ```bash
+   python -m unittest test_list_operations.py
+   python -m unittest test_list_comprehensions.py
+   ```
+
+5. You should see output indicating that all tests have passed:
+
+   ```
+   ....
+   ----------------------------------------------------------------------
+   Ran 4 tests in 0.001s
+
+   OK
+   ```
+
+6. If you see failures, review the error messages to understand what went wrong and fix your implementations.
 
 ## Wrap-up (10 minutes)
 
-- Wrap-up (10 min): Solution review and implementation alternatives
+- Wrap-up (10 min): Review of Python collections and list comprehensions
+- Discuss the advantages of list comprehensions over traditional loops
+- Share solutions to the exercises
 
 ## Additional Resources
+
+- [Python Documentation - Data Structures](https://docs.python.org/3/tutorial/datastructures.html)
+- [Python Documentation - List Comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions)
+- [Real Python - Python List Comprehensions](https://realpython.com/list-comprehension-python/)
+- [Real Python - Dictionaries in Python](https://realpython.com/python-dicts/)
