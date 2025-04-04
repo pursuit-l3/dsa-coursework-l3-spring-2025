@@ -83,7 +83,6 @@ To set up Python for this training, follow these steps:
 
 ```bash
 python --version
-
 ```
 
 ### Python Fundamentals (35 minutes)
@@ -127,33 +126,6 @@ Python is a dynamically-typed language, which means variable types are determine
 5. **None**: Represents the absence of a value
    ```python
    result = None
-   ```
-
-##### Collection Types
-
-1. **Lists**: Ordered, mutable collections
-
-   ```python
-   numbers = [1, 2, 3, 4, 5]
-   mixed = [1, "hello", True, 3.14]
-   ```
-
-2. **Tuples**: Ordered, immutable collections
-
-   ```python
-   coordinates = (10, 20)
-   rgb = (255, 0, 0)
-   ```
-
-3. **Dictionaries**: Key-value pairs
-
-   ```python
-   person = {"name": "John", "age": 30, "city": "New York"}
-   ```
-
-4. **Sets**: Unordered collections of unique elements
-   ```python
-   unique_numbers = {1, 2, 3, 4, 5}
    ```
 
 ## Exercises

@@ -261,6 +261,24 @@ Week 1: Python Fundamentals & DSA Basics
 - Project Work: Final refinements, peer review session
 - Assessment: Algorithm proficiency test and portfolio project presentations
 
+### Day 10
+
+- Technical Training: Advanced sorting algorithms (QuickSort, MergeSort)
+- DSA Focus: Sorting and searching (LeetCode problems: Sort Colors, Search in Rotated Sorted Array)
+- Project Work: Implementing search functionality, user experience enhancements
+
+### Day 11
+
+- Technical Training: Introduction to machine learning concepts
+- DSA Focus: Heaps and priority queues (LeetCode problems: Kth Largest Element in an Array, Merge k Sorted Lists)
+- Project Work: Data visualization and analytics integration
+
+### Day 12
+
+- Technical Training: Web scraping with Python (BeautifulSoup, Scrapy)
+- DSA Focus: Trie data structure (LeetCode problems: Implement Trie, Word Search II)
+- Project Work: Final project integration, end-to-end testing
+
 ### Capstone Opportunity
 
 Top-performing students will be invited to interview with a senior instructor for a collaborative research project: an AI agent designed to teach coding. This project will emphasize cutting-edge AI integration and provide an opportunity to work on a live, impactful product.
